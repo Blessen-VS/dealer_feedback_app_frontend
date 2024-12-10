@@ -20,6 +20,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _isLoading = false;
   Timer? _verificationTimer;
 
+
+
   Future<void> _registerUser() async {
     if (_formKey.currentState?.validate() ?? false) {
       setState(() {
@@ -27,7 +29,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       });
 
       final response = await http.post(
-        Uri.parse('http://localhost:3000/api/auth/register'), // Change to backend API URL
+        Uri.parse('https://dealer-feedback-app-backend.onrender.com/api/auth/register'), // Change to backend API URL
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           'email': _emailController.text,
@@ -59,7 +61,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void _startVerificationPolling() {
     _verificationTimer = Timer.periodic(Duration(seconds: 5), (timer) async {
       final response = await http.get(
-        Uri.parse('http://localhost:3000/api/auth/check-verification-status?email=${_emailController.text}'),
+        Uri.parse('https://dealer-feedback-app-backend.onrender.com/api/auth/check-verification-status?email=${_emailController.text}'),
       );
 
       if (response.statusCode == 200) {
